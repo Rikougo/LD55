@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a892360432b4628a5508c0dd4160263, type: 3}
+  m_Name: Combinations
+  m_EditorClassIdentifier: 
+  m_combinationParts:
+    _serializedList:
+    - Key: 0
+      Value:
+        icon: {fileID: 21300000, guid: 2818885f11e1f214a90ce749e9789179, type: 3}
+        body: {fileID: 21300000, guid: 772831c6b6876a44783afbc74f78bb1a, type: 3}
+        arms: {fileID: 21300000, guid: e3e6363f94392d2499bae11900ac27c1, type: 3}
+        health: 140
+        damage: 30
+        part: 0
+    - Key: 1
+      Value:
+        icon: {fileID: 21300000, guid: 77fd1b3469e42eb429d452add2a1551c, type: 3}
+        body: {fileID: 21300000, guid: e90226b0568a5034991f27ac927452e6, type: 3}
+        arms: {fileID: 21300000, guid: 3d1e2c35f4ede6046b1a6a6986bd2da6, type: 3}
+        health: 100
+        damage: 25
+        part: 0
