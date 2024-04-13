@@ -6,6 +6,7 @@ namespace Summoning
     public class ProjectileComponent : MonoBehaviour
     {
         public Vector3 Direction { get; set; } = Vector3.zero;
+        public int Damage { get; set; } = 0;
 
         private void Update()
         {

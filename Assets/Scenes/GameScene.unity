@@ -777,10 +777,13 @@ MonoBehaviour:
   m_monsterController: {fileID: 959615425}
   m_manaRegenRate: 2
   m_manaCost: 10
+  m_monsterDropAsset: {fileID: 11400000, guid: bc31db748a023f44d87fac2274c13f38, type: 2}
+  m_monsterDropPrefab: {fileID: 2702168147271885349, guid: 5907974a4ef9e4441b3d8ef8251837df, type: 3}
   m_combinationController: {fileID: 185569374}
   m_gunPosition: {fileID: 1172976407}
   m_projectilePrefab: {fileID: 6297543995092307038, guid: cdac40baf3a41a749bb0ae00fb5f8663, type: 3}
-  m_baseTowerHealth: 0
+  m_towerDamage: 0
+  m_baseTowerHealth: 10
 --- !u!4 &1048582444
 Transform:
   m_ObjectHideFlags: 0
@@ -826,7 +829,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0

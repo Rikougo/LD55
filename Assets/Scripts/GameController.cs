@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using Summoning.Combination;
 using Summoning.Monster;
+using Unity.Mathematics;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Summoning
 {
@@ -13,16 +15,20 @@ namespace Summoning
 
     public class GameController : MonoBehaviour
     {
-        [Header("Monsters")] [SerializeField] private MonsterController m_monsterController;
-
+        [Header("Monsters")] 
+        [SerializeField] private MonsterController m_monsterController;
         [SerializeField] private float m_manaRegenRate = 10.0f;
         [SerializeField] private float m_manaCost = 10.0f;
 
+        [SerializeField] private MonsterDropAsset m_monsterDropAsset;
+        [SerializeField] private MonsterDrop m_monsterDropPrefab;
+
         [Header("Summons")] [SerializeField] private CombinationController m_combinationController;
 
-        [Header("Tower")] [SerializeField] private Transform m_gunPosition;
-
+        [Header("Tower")] 
+        [SerializeField] private Transform m_gunPosition;
         [SerializeField] private ProjectileComponent m_projectilePrefab;
+        [SerializeField] private int m_towerDamage = 25;
         [SerializeField] private float m_baseTowerHealth = 10;
 
         private GameState m_gameState;
@@ -88,7 +94,8 @@ namespace Summoning
 
         private void TickGame()
         {
-            ScaleDifficulty();
+            this.ScaleDifficulty();
+            this.ProcessPickup();
 
             m_monsterMana += m_manaRegenRate * Time.deltaTime;
             if (m_monsterMana > m_manaCost)
@@ -114,6 +121,20 @@ namespace Summoning
             m_manaRegenRate += Time.deltaTime * 0.05f;
         }
 
+        private void ProcessPickup()
+        {
+            Collider2D l_collider2D = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+                                   (1 << LayerMask.NameToLayer("Drop")));
+            if (Input.GetMouseButtonDown(0) && l_collider2D != null) 
+            {
+                MonsterDrop l_drop = l_collider2D.gameObject.GetComponent<MonsterDrop>();
+                if (l_drop != null)
+                {
+                    l_drop.Collect();
+                }
+            }
+        }
+
         private void SpawnMonster()
         {
             if (m_monstersToSpawn.Count == 0) return;
@@ -136,8 +157,20 @@ namespace Summoning
 
         private void OnFirstMonsterDied()
         {
-            m_monsters.Dequeue().Died -= OnFirstMonsterDied;
+            CombinedMonster l_monster = m_monsters.Dequeue();
+            this.SpawnDrop(l_monster.Part, l_monster.transform.position + new Vector3(0.0f, 0.25f, 0.0f));
+            
+            l_monster.Died -= OnFirstMonsterDied;
             m_monsters.Peek().Died += OnFirstMonsterDied;
+        }
+
+        private void SpawnDrop(CombinationPart p_part, Vector3 p_position)
+        {
+            if (m_monsterDropAsset.TryGetDrop(p_part, out Sprite l_sprite))
+            {
+                MonsterDrop l_instance = GameObject.Instantiate(m_monsterDropPrefab, p_position, Quaternion.identity);
+                l_instance.Init(l_sprite, p_part);
+            }
         }
 
         private void ShootIfNeeded()
@@ -148,8 +181,9 @@ namespace Summoning
             if ((l_closestPos - m_gunPosition.position).sqrMagnitude < 500.0f)
                 if (Time.time - m_lastTimeShot > 1.0f)
                 {
-                    var l_projectile = Instantiate(m_projectilePrefab, m_gunPosition);
+                    ProjectileComponent l_projectile = Instantiate(m_projectilePrefab, m_gunPosition);
                     l_projectile.Direction = l_closestPos - m_gunPosition.position;
+                    l_projectile.Damage = m_towerDamage;
                     m_lastTimeShot = Time.time;
                 }
         }
