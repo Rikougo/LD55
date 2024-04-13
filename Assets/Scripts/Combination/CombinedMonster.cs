@@ -22,10 +22,7 @@ namespace Summoning.Combination
 
         private void Update()
         {
-            if (m_healthDisplay != null)
-            {
-                m_healthDisplay.text = m_health.ToString();
-            }
+            if (m_healthDisplay != null) m_healthDisplay.text = m_health.ToString();
         }
 
         public event Action Died;
