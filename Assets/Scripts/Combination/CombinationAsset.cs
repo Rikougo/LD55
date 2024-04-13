@@ -10,6 +10,7 @@ namespace Summoning.Combination
         public Sprite icon;
         public Sprite body;
         public Sprite arms;
+        public RuntimeAnimatorController animatorController;
 
         public int health;
         public int damage;

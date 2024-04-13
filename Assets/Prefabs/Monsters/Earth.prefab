@@ -15,7 +15,7 @@ PrefabInstance:
     - target: {fileID: 238022831323472224, guid: eb96efca29a418c419a429109b98864a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e3e6363f94392d2499bae11900ac27c1, type: 3}
+      objectReference: {fileID: 21300000, guid: 1c304e26fa49355409c26e5397b7d512, type: 3}
     - target: {fileID: 238022831323472224, guid: eb96efca29a418c419a429109b98864a, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -83,7 +83,7 @@ PrefabInstance:
     - target: {fileID: 7059271165646027324, guid: eb96efca29a418c419a429109b98864a, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 772831c6b6876a44783afbc74f78bb1a, type: 3}
+      objectReference: {fileID: 21300000, guid: 75faa7aaee62f7b408528d71294999a2, type: 3}
     - target: {fileID: 7059271165646027324, guid: eb96efca29a418c419a429109b98864a, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -91,5 +91,35 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8404686601333511518, guid: eb96efca29a418c419a429109b98864a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6140357740213442588}
   m_SourcePrefab: {fileID: 100100000, guid: eb96efca29a418c419a429109b98864a, type: 3}
+--- !u!1 &4967953664462068015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8404686601333511518, guid: eb96efca29a418c419a429109b98864a, type: 3}
+  m_PrefabInstance: {fileID: 3482063604610796657}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &6140357740213442588
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4967953664462068015}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1427d37e7add4c54ab32cff39e5654f0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
