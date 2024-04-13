@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: e90226b0568a5034991f27ac927452e6
+guid: c0e34dfc553f2da4fa7cbea6da6e56d5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4595607530635778484
-    second: water_body_0
-  - first:
-      213: 2092038230931240081
-    second: water_body_1
+      213: -325760215560698311
+    second: water_body_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: water_body_0
+      name: water_body_2_0
       rect:
         serializedVersion: 2
-        x: 63
-        y: 303
-        width: 69
-        height: 75
+        x: 10
+        y: 11
+        width: 203
+        height: 251
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,29 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c462859ac4f1930c0800000000000000
-      internalID: -4595607530635778484
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: water_body_1
-      rect:
-        serializedVersion: 2
-        x: 44
-        y: 0
-        width: 108
-        height: 285
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 194713bdfa9680d10800000000000000
-      internalID: 2092038230931240081
+      spriteID: 936cc855fcaaa7bf0800000000000000
+      internalID: -325760215560698311
       vertices: []
       indices: 
       edges: []
@@ -155,8 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      water_body_0: -4595607530635778484
-      water_body_1: 2092038230931240081
+      water_body_2_0: -325760215560698311
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

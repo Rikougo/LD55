@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 772831c6b6876a44783afbc74f78bb1a
+guid: c5bbdf3a36f7c6340a092390ec070930
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6193905519103763257
-    second: earth_body_0
-  - first:
-      213: -8590739799676600003
-    second: earth_body_1
+      213: -2321928110854037996
+    second: water_arm_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -54,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 200
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -103,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: earth_body_0
+      name: water_arm_0
       rect:
         serializedVersion: 2
-        x: 63
-        y: 303
-        width: 69
-        height: 75
+        x: 115
+        y: 102
+        width: 117
+        height: 116
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,29 +114,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7cc1d714fb3da0aa0800000000000000
-      internalID: -6193905519103763257
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: earth_body_1
-      rect:
-        serializedVersion: 2
-        x: 44
-        y: 0
-        width: 108
-        height: 285
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d31477afaaf87c880800000000000000
-      internalID: -8590739799676600003
+      spriteID: 41e1d8e6faad6cfd0800000000000000
+      internalID: -2321928110854037996
       vertices: []
       indices: 
       edges: []
@@ -155,8 +131,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      earth_body_0: -6193905519103763257
-      earth_body_1: -8590739799676600003
+      water_arm_0: -2321928110854037996
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

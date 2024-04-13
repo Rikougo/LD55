@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_bodyRenderer: {fileID: 7059271165646027324}
   m_armRenderer: {fileID: 238022831323472224}
+  m_bodyAnimator: {fileID: 0}
   m_health: 0
   m_damage: 0
   m_healthDisplay: {fileID: 9058186926775453750}
@@ -326,6 +327,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1663988298436355465}
   - component: {fileID: 7059271165646027324}
+  - component: {fileID: 7306009243241059437}
   m_Layer: 3
   m_Name: Body
   m_TagString: Untagged
@@ -402,6 +404,28 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &7306009243241059437
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8404686601333511518}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8616828385224756261
 GameObject:
   m_ObjectHideFlags: 0
