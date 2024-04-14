@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: m_health
       value: 140
       objectReference: {fileID: 0}
+    - target: {fileID: 1004392952500363584, guid: eb96efca29a418c419a429109b98864a, type: 3}
+      propertyPath: m_deathClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d7c5e96e00c59914591a4bfe52390380, type: 3}
     - target: {fileID: 1103767862718186444, guid: eb96efca29a418c419a429109b98864a, type: 3}
       propertyPath: m_Name
       value: Earth

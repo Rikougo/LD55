@@ -15,6 +15,8 @@ MonoBehaviour:
   m_drops:
     _serializedList:
     - Key: 0
-      Value: {fileID: 21300000, guid: 2818885f11e1f214a90ce749e9789179, type: 3}
+      Value: {fileID: 21300000, guid: 6010cdf51bc809a48b46b452dd701354, type: 3}
+    - Key: 3
+      Value: {fileID: 21300000, guid: ad688977e8bfe1f419ee446ffd592ff1, type: 3}
     - Key: 1
-      Value: {fileID: 21300000, guid: 77fd1b3469e42eb429d452add2a1551c, type: 3}
+      Value: {fileID: 21300000, guid: 21008f33d9b958f43919277d1f7b3c1a, type: 3}

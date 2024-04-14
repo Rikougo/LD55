@@ -41,11 +41,15 @@ namespace Summoning.UI
 
         public void OnDrag(PointerEventData p_eventData)
         {
+            if (m_dragImage == null) return;
+            
             m_dragImage.transform.position = p_eventData.position;
         }
 
         public void OnEndDrag(PointerEventData p_eventData)
         {
+            if (m_dragImage == null) return;
+            
             Destroy(m_dragImage.gameObject);
             m_dragImage = null;
         }

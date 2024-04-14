@@ -16,7 +16,7 @@ MonoBehaviour:
     _serializedList:
     - Key: 0
       Value:
-        icon: {fileID: 21300000, guid: 2818885f11e1f214a90ce749e9789179, type: 3}
+        icon: {fileID: 21300000, guid: 6010cdf51bc809a48b46b452dd701354, type: 3}
         body: {fileID: 21300000, guid: e42e9154c257a594a8100698214b2084, type: 3}
         arms: {fileID: 21300000, guid: c289de63f77d7604c903b1931f5d3e57, type: 3}
         animatorController: {fileID: 9100000, guid: 82c405dca82256442a586d27a5cb99d2, type: 2}
@@ -25,10 +25,19 @@ MonoBehaviour:
         part: 0
     - Key: 1
       Value:
-        icon: {fileID: 21300000, guid: 77fd1b3469e42eb429d452add2a1551c, type: 3}
+        icon: {fileID: 21300000, guid: 21008f33d9b958f43919277d1f7b3c1a, type: 3}
         body: {fileID: 21300000, guid: 6bc0d95cba242264ebd7a0b76dc4105f, type: 3}
         arms: {fileID: 21300000, guid: c5bbdf3a36f7c6340a092390ec070930, type: 3}
         animatorController: {fileID: 9100000, guid: 4c723086a74d30a45a0b9f0cc3bd3a25, type: 2}
         health: 100
         damage: 25
+        part: 0
+    - Key: 3
+      Value:
+        icon: {fileID: 21300000, guid: ad688977e8bfe1f419ee446ffd592ff1, type: 3}
+        body: {fileID: 21300000, guid: b7a5dde865c3e0e42a046522e2fefeb0, type: 3}
+        arms: {fileID: 21300000, guid: efdafb0f6b5b12948af74960dae807ab, type: 3}
+        animatorController: {fileID: 9100000, guid: e735f0b7a3a212f4ba53d109a3d3ae3f, type: 2}
+        health: 110
+        damage: 10
         part: 0

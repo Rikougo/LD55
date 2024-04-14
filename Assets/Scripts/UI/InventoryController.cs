@@ -8,8 +8,10 @@ namespace Summoning.UI
     {
         [SerializeField] private CombinationAsset m_combinationAsset;
         [SerializeField] private PartEntry m_partEntryPrefab;
+        [SerializeField] private List<Transform> m_slots;
 
         private Dictionary<CombinationPart, PartEntry> m_entries;
+        private List<Transform> m_slotsInUse;
 
         public void UpdateDisplay(Dictionary<CombinationPart, int> p_inventory)
         {
@@ -19,7 +21,8 @@ namespace Summoning.UI
                 {
                     if (m_combinationAsset.TryGetPart(l_combinationPart, out var l_data))
                     {
-                        var l_instance = Instantiate(m_partEntryPrefab, transform);
+                        Transform l_slot = this.ClaimFirstFreeSlot();
+                        var l_instance = Instantiate(m_partEntryPrefab, l_slot);
                         l_instance.Sprite = l_data.icon;
                         l_instance.Part = l_combinationPart;
                         m_entries.Add(l_combinationPart, l_instance);
@@ -41,6 +44,21 @@ namespace Summoning.UI
                     GameObject.Destroy(l_gameObject.gameObject);
 
             m_entries = new Dictionary<CombinationPart, PartEntry>();
+            m_slotsInUse = new List<Transform>();
+        }
+
+        private Transform ClaimFirstFreeSlot()
+        {
+            foreach (var l_transform in m_slots)
+            {
+                if (!m_slotsInUse.Contains(l_transform))
+                {
+                    m_slotsInUse.Add(l_transform);
+                    return l_transform;
+                }
+            }
+
+            return null;
         }
     }
 }
