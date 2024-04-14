@@ -4,6 +4,7 @@ using Summoning.Combination;
 using Summoning.Monster;
 using Summoning.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace Summoning
@@ -47,6 +48,9 @@ namespace Summoning
         [SerializeField] private int m_baseMonsterPerWave;
         [SerializeField] private int m_monsterPerWaveGrow;
         [SerializeField] private float m_waveIdle;
+        [SerializeField] private AudioSource m_musicPlayer;
+        [SerializeField] private AudioClip m_musicClip;
+        [SerializeField] private AudioClip m_defeatClip;
 
         private GameState m_gameState;
 
@@ -70,9 +74,13 @@ namespace Summoning
         private int m_currentMonsterAmount;
         private List<CombinationPart> m_availableParts;
         private float m_scheduleNextWaveTime;
+        private float m_gameOverTime;
+        private float m_endTime;
 
         public event Action<int> NewWaveStarted;
         public event Action WaveCleared;
+        public event Action GameOver;
+        public event Action GameWin;
 
         private void Awake()
         {
@@ -100,13 +108,15 @@ namespace Summoning
         {
             if (p_other.CompareTag("Enemy"))
             {
-                DamageTower(1);
-                if (p_other.TryGetComponent(out CombinedMonster l_monster))
+                if (DamageTower(1))
                 {
-                    l_monster.Kill();
-                    if (m_monsters.Contains(l_monster))
+                    if (p_other.TryGetComponent(out CombinedMonster l_monster))
                     {
-                        m_monsters.Remove(l_monster);
+                        l_monster.Kill();
+                        if (m_monsters.Contains(l_monster))
+                        {
+                            m_monsters.Remove(l_monster);
+                        }
                     }
                 }
             }
@@ -114,6 +124,10 @@ namespace Summoning
 
         private void OnReset()
         {
+            m_musicPlayer.clip = m_musicClip;
+            m_musicPlayer.loop = true;
+            m_musicPlayer.Play();
+            
             m_monstersToSpawn = new Queue<CombinationPart>();
             m_monstersToSpawn.Enqueue(CombinationPart.EARTH);
             m_monstersToSpawn.Enqueue(CombinationPart.WATER);
@@ -141,23 +155,48 @@ namespace Summoning
             this.SetupMobQueue();
         }
 
-        public void DamageTower(int p_amount)
+        public bool DamageTower(int p_amount)
         {
             m_towerHealth -= p_amount;
 
             if (m_towerHealth <= 0)
             {
                 OnGameOver();
-                return;
+                return false;
             }
 
             float l_healthPercent = (float)m_towerHealth / (float)m_baseTowerHealth;
             int l_healthIndex = (int)Mathf.Ceil(l_healthPercent * m_towerSprites.Count);
             m_towerRenderer.sprite = m_towerSprites[^l_healthIndex];
+
+            return true;
         }
 
         private void TickGame()
         {
+            if (m_endTime > 0)
+            {
+                m_endTime -= Time.deltaTime;
+                if (m_endTime < 0)
+                {
+                    SceneManager.LoadScene("EndScene");
+                    return;
+                }
+
+                return;
+            }
+            
+            if (m_gameOverTime > 0)
+            {
+                m_gameOverTime -= Time.deltaTime;
+                if (m_gameOverTime < 0)
+                {
+                    this.OnReset();
+                }
+
+                return;
+            }
+            
             float l_deltaTime = Time.deltaTime;
             
             ProcessPickup();
@@ -260,6 +299,12 @@ namespace Summoning
 
         private void GoToNextWave()
         {
+            if (m_currentWave == 7)
+            {
+                this.ScheduleWin();
+                return;
+            }
+            
             this.NewWaveStarted?.Invoke(m_currentWave + 1);
             
             m_currentWave++;
@@ -381,6 +426,12 @@ namespace Summoning
             this.ClearSummons();
         }
 
+        private void ScheduleWin()
+        {
+            m_endTime = 5.0f;
+            this.GameWin?.Invoke();
+        }
+
         private void SpawnDrop(CombinationPart p_part, Vector3 p_position)
         {
             if (m_monsterDropAsset.TryGetDrop(p_part, out var l_sprite))
@@ -466,7 +517,12 @@ namespace Summoning
         private void OnGameOver()
         {
             Cleanup();
-            OnReset();
+
+            m_gameOverTime = 10.0f;
+            m_musicPlayer.clip = m_defeatClip;
+            m_musicPlayer.loop = false;
+            m_musicPlayer.Play();
+            this.GameOver?.Invoke();
         }
     }
 }

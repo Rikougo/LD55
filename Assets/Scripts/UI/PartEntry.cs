@@ -32,7 +32,7 @@ namespace Summoning.UI
 
         public void OnBeginDrag(PointerEventData p_eventData)
         {
-            if (this.Amount == 0) return;
+            if (this.Amount < 0) return;
             
             m_dragImage = Instantiate(m_dragObjectPrefab, p_eventData.position, quaternion.identity,
                                       transform);

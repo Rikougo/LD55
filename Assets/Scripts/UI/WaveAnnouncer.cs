@@ -17,12 +17,16 @@ namespace Summoning.UI
         {
             m_gameController.WaveCleared += this.OnWaveCleared;
             m_gameController.NewWaveStarted += this.WaveStarted;
+            m_gameController.GameOver += this.OnGameOver;
+            m_gameController.GameWin += this.OnGameWin;
         }
 
         private void OnDisable()
         {
             m_gameController.WaveCleared -= this.OnWaveCleared;
             m_gameController.NewWaveStarted -= this.WaveStarted;
+            m_gameController.GameOver -= this.OnGameOver;
+            m_gameController.GameWin -= this.OnGameWin;
         }
 
         private void Update()
@@ -57,9 +61,21 @@ namespace Summoning.UI
             this.StartAnimation();
         }
 
-        private void StartAnimation()
+        private void OnGameOver()
         {
-            m_animationTimer = m_animationTime;
+            m_text.text = "Game over";
+            this.StartAnimation(7.0f);
+        }
+
+        private void OnGameWin()
+        {
+            m_text.text = "Game won";
+            this.StartAnimation(5.0f);
+        }
+
+        private void StartAnimation(float? p_customAnimationTime  = null)
+        {
+            m_animationTimer = p_customAnimationTime  ?? m_animationTime;
             m_text.enabled = true;
         }
     }

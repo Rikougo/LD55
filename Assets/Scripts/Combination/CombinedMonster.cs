@@ -28,7 +28,6 @@ namespace Summoning.Combination
         [SerializeField] private SpriteRenderer m_armRenderer;
         [SerializeField] private Animator m_bodyAnimator;
         [SerializeField] private Transform m_armJoint;
-        [SerializeField] private TextMeshProUGUI m_healthDisplay;
         [SerializeField] private AudioSource m_damageSource;
         [SerializeField] private ParticleSystem m_healParticles;
         [SerializeField] private ParticleSystem m_damageParticles;
@@ -55,8 +54,6 @@ namespace Summoning.Combination
 
         public void Tick(float p_deltaTime)
         {
-            if (m_healthDisplay != null) m_healthDisplay.text = m_health.ToString();
-
             if (m_isAttacking)
             {
                 m_animationProgress += p_deltaTime * (1.0f / m_attackRate);
