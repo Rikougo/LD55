@@ -247,6 +247,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0f4ff51d8e4bf39b5a6880aae30bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_dropAsset: {fileID: 11400000, guid: bc31db748a023f44d87fac2274c13f38, type: 2}
+  m_image: {fileID: 153621168}
 --- !u!114 &153621168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1077,7 +1079,7 @@ MonoBehaviour:
   m_inventoryController: {fileID: 337124931}
   m_gunPosition: {fileID: 1172976407}
   m_projectilePrefab: {fileID: 6297543995092307038, guid: cdac40baf3a41a749bb0ae00fb5f8663, type: 3}
-  m_towerDamage: 25
+  m_towerDamage: 40
   m_baseTowerHealth: 10
   m_towerRenderer: {fileID: 1882951952}
   m_baseTowerSprite: {fileID: 21300000, guid: 80e8c35d5c406ae41869885a00be9a22, type: 3}
@@ -1582,7 +1584,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: 6d4d7cdadb05e30498cf76dce5a16e9e, type: 3}
   m_Resource: {fileID: 8300000, guid: 6d4d7cdadb05e30498cf76dce5a16e9e, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.45
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1986,6 +1988,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0f4ff51d8e4bf39b5a6880aae30bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_dropAsset: {fileID: 11400000, guid: bc31db748a023f44d87fac2274c13f38, type: 2}
+  m_image: {fileID: 1524775606}
 --- !u!114 &1524775606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2220,7 +2224,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1647724331}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1878845842}
+        m_TargetAssemblyTypeName: Summoning.UI.CombineShutter, Assembly-CSharp
+        m_MethodName: ToggleOpen
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1647724331
 MonoBehaviour:
   m_ObjectHideFlags: 0

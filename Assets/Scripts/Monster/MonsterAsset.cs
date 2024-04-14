@@ -7,7 +7,12 @@ namespace Summoning.Monster
     [CreateAssetMenu(menuName = "Summoning/Monster Asset", fileName = "Monsters")]
     public class MonsterAsset : ScriptableObject
     {
-        public static CombinationPart[] ExistingMonsters = { CombinationPart.EARTH, CombinationPart.WATER, CombinationPart.PLANT };
+        public static CombinationPart[] ExistingMonsters = { CombinationPart.EARTH, 
+            CombinationPart.WATER, 
+            CombinationPart.PLANT, 
+            CombinationPart.DEMON, 
+            CombinationPart.FIRE, 
+            CombinationPart.ELECTRICITY };
 
         [SerializeField] private SerializedDictionary<CombinationPart, CombinedMonster> m_monsters;
 

@@ -128,6 +128,8 @@ namespace Summoning
 
         private void TickGame()
         {
+            float l_deltaTime = Time.deltaTime;
+            
             ScaleDifficulty();
             ProcessPickup();
 
@@ -140,25 +142,52 @@ namespace Summoning
 
             if (m_monsters.Count > 0)
             {
-                foreach (var l_combinedMonster in m_monsters)
+                for (var l_index = 0; l_index < m_monsters.Count; l_index++)
                 {
-                    if (l_combinedMonster.CurrentState == CombinedMonster.MonsterState.ATTACK) break;
-                    
+                    var l_combinedMonster = m_monsters[l_index];
+                    l_combinedMonster.Tick(l_deltaTime);
+                    if (l_combinedMonster.CurrentState == CombinedMonster.MonsterState.ATTACK) continue;
                     var l_transform = l_combinedMonster.transform;
-                    l_transform.position = l_transform.position + l_transform.right * Time.deltaTime;
+                    if (l_index > 0 && m_monsters[0].CurrentState == CombinedMonster.MonsterState.ATTACK)
+                    {
+                        var l_previousTransform = m_monsters[l_index - 1].transform;
+                        
+                        if ((l_previousTransform.position - l_transform.position).sqrMagnitude > 1.5f)
+                        {
+                            l_transform.position = l_transform.position + l_transform.right * Time.deltaTime;
+                        }
+                    }
+                    else
+                    {
+                        l_transform.position = l_transform.position + l_transform.right * Time.deltaTime;
+                    }
+
                 }
 
-                ShootIfNeeded();
+                ShootIfNeeded(l_deltaTime);
             }
 
             if (m_summons.Count > 0)
             {
-                foreach (var l_combinedMonster in m_summons)
+                for (var l_index = 0; l_index < m_summons.Count; l_index++)
                 {
-                    if (l_combinedMonster.CurrentState == CombinedMonster.MonsterState.ATTACK) break;
-                    
+                    var l_combinedMonster = m_summons[l_index];
+                    l_combinedMonster.Tick(l_deltaTime);
+                    if (l_combinedMonster.CurrentState == CombinedMonster.MonsterState.ATTACK) continue;
                     var l_transform = l_combinedMonster.transform;
-                    l_transform.position = l_transform.position + l_transform.right * Time.deltaTime;
+                    if (l_index > 0 && m_summons[0].CurrentState == CombinedMonster.MonsterState.ATTACK)
+                    {
+                        var l_previousTransform = m_summons[l_index - 1].transform;
+
+                        if ((l_previousTransform.position - l_transform.position).sqrMagnitude > 1.5f)
+                        {
+                            l_transform.position = l_transform.position + l_transform.right * Time.deltaTime;
+                        }
+                    }
+                    else
+                    {
+                        l_transform.position = l_transform.position + l_transform.right * Time.deltaTime;
+                    }
                 }
             }
             
@@ -173,8 +202,8 @@ namespace Summoning
                     l_summon.CurrentState = CombinedMonster.MonsterState.ATTACK;
                     l_monster.CurrentState = CombinedMonster.MonsterState.ATTACK;
 
-                    l_summon.TickAttack(l_monster);
-                    l_monster.TickAttack(l_summon);
+                    l_summon.TickAttack(l_monster, l_deltaTime);
+                    l_monster.TickAttack(l_summon, l_deltaTime);
                 }
                 else
                 {
@@ -259,7 +288,7 @@ namespace Summoning
             }
         }
 
-        private void ShootIfNeeded()
+        private void ShootIfNeeded(float p_deltaTime)
         {
             var l_closestMonster = m_monsters[0].transform;
             var l_closestPos = l_closestMonster.position;

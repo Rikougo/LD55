@@ -23,6 +23,33 @@ MonoBehaviour:
         health: 140
         damage: 30
         part: 0
+    - Key: 4
+      Value:
+        icon: {fileID: 21300000, guid: 4fe96367699acdd4e86fa6a7074422f1, type: 3}
+        body: {fileID: 21300000, guid: d89a163fc1e5d434aa144db9d2b893d7, type: 3}
+        arms: {fileID: 21300000, guid: d5dbaf9badde31e47ac98966703e0b4a, type: 3}
+        animatorController: {fileID: 9100000, guid: ef11be640debb2142a781533bacfbd7b, type: 2}
+        health: 100
+        damage: 17
+        part: 0
+    - Key: 5
+      Value:
+        icon: {fileID: 21300000, guid: bcfdd8bfe555f0d4fac54e2ecf79b964, type: 3}
+        body: {fileID: 21300000, guid: 26219a1c72d026f4da02378006142baf, type: 3}
+        arms: {fileID: 21300000, guid: 25c810b1e26749f40ae95f6fc13cd484, type: 3}
+        animatorController: {fileID: 9100000, guid: 952498e3be455bb43bcaf548319e5866, type: 2}
+        health: 80
+        damage: 20
+        part: 0
+    - Key: 2
+      Value:
+        icon: {fileID: 21300000, guid: ff81dd4af5b6b0649936545f5395e393, type: 3}
+        body: {fileID: 21300000, guid: d791e7748af9582419bd48ea5dd68f0e, type: 3}
+        arms: {fileID: 21300000, guid: 27af6cded0c15824c96c3f3ef01a5cb1, type: 3}
+        animatorController: {fileID: 9100000, guid: c1e1ab5682d466547b57ed8a305bc09d, type: 2}
+        health: 120
+        damage: 20
+        part: 0
     - Key: 1
       Value:
         icon: {fileID: 21300000, guid: 21008f33d9b958f43919277d1f7b3c1a, type: 3}

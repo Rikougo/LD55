@@ -42,7 +42,7 @@ namespace Summoning.Combination
         [SerializeField] private AudioSource m_audioSourcePrefab;
         [SerializeField] private AudioClip m_deathClip;
 
-        private float m_lastAttack;
+        private float m_attackTime;
         private bool m_isAttacking;
         private float m_slowTime;
         private float m_animationProgress;
@@ -53,13 +53,14 @@ namespace Summoning.Combination
         
         public MonsterState CurrentState { get; set; }
 
-        private void Update()
+        public void Tick(float p_deltaTime)
         {
             if (m_healthDisplay != null) m_healthDisplay.text = m_health.ToString();
 
             if (m_isAttacking)
             {
-                m_animationProgress += Time.deltaTime * (1.0f / m_attackRate);
+                Debug.Log($"Tick {p_deltaTime}");
+                m_animationProgress += p_deltaTime * (1.0f / m_attackRate);
                 Vector3 l_rotation = m_armJoint.eulerAngles;
                 l_rotation.z = m_attackAnimation.Evaluate(m_animationProgress);
                 m_armJoint.eulerAngles = l_rotation;
@@ -72,7 +73,7 @@ namespace Summoning.Combination
 
             if (m_slowTime > 0)
             {
-                m_slowTime -= Time.deltaTime;
+                m_slowTime -= p_deltaTime;
             }
         }
 
@@ -91,7 +92,7 @@ namespace Summoning.Combination
             m_damage = p_armData.damage;
             m_damageType = p_armData.part;
 
-            m_lastAttack = Time.time;
+            m_attackTime = 0;
             m_isAttacking = false;
             
             m_slowTime = 0;
@@ -114,12 +115,13 @@ namespace Summoning.Combination
             m_healParticles.Play();
         }
 
-        public void TickAttack(CombinedMonster p_target)
+        public void TickAttack(CombinedMonster p_target, float p_deltaTime)
         {
             float l_attackRate = m_slowTime > 0 ? m_attackRate * 2.0f : m_attackRate;
-            if (Time.time - m_lastAttack > l_attackRate)
+            m_attackTime += p_deltaTime;
+            if (m_attackTime > l_attackRate)
             {
-                m_lastAttack = Time.time;
+                m_attackTime = 0.0f;
                 bool l_isCrit = CombinedMonster.IsCrit(m_damageType, p_target.m_armorType);
                 int l_damage = l_isCrit ? m_damage * 2 : m_damage;
                 p_target.TakeDamage(l_damage, l_isCrit);

@@ -48,6 +48,8 @@ namespace Summoning.UI
                 Combined?.Invoke(m_registeredArm.Value, m_registeredBody.Value);
                 m_registeredArm = null;
                 m_registeredBody = null;
+                m_bodySlot.OnReset();
+                m_armSlot.OnReset();
             }
         }
     }

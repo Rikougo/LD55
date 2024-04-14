@@ -6,6 +6,7 @@ namespace Summoning.Combination
         WATER,
         FIRE,
         PLANT,
-        ELECTRICITY
+        ELECTRICITY,
+        DEMON
     }
 }
