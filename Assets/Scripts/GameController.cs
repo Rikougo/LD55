@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Summoning.Combination;
 using Summoning.Monster;
 using Summoning.UI;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Summoning
 {
@@ -14,26 +16,37 @@ namespace Summoning
 
     public class GameController : MonoBehaviour
     {
-        [Header("Monsters")] [SerializeField] private MonsterController m_monsterController;
-        [SerializeField] private float m_manaRegenRate = 10.0f;
+        [Header("Monsters")] 
+        [SerializeField] private MonsterController m_monsterController;
+        [SerializeField] private float m_manaRegenRate = 2.0f;
         [SerializeField] private float m_manaCost = 10.0f;
 
         [SerializeField] private MonsterDropAsset m_monsterDropAsset;
         [SerializeField] private MonsterDrop m_monsterDropPrefab;
 
-        [Header("Summons")] [SerializeField] private CombineController m_combineController;
+        [Header("Summons")] 
+        [SerializeField] private CombineController m_combineController;
         [SerializeField] private CombinationController m_combinationController;
         [SerializeField] private InventoryController m_inventoryController;
+        [SerializeField] private AudioSource m_summonSound;
+        [SerializeField] private AudioSource m_summonDeathSound;
+        [SerializeField] private AudioSource m_summonHealSound;
 
-        [Header("Tower")] [SerializeField] private Transform m_gunPosition;
+        [Header("Tower")]
+        [SerializeField] private SpriteRenderer m_towerRenderer;
+        [SerializeField] private Transform m_gunPosition;
+        [SerializeField] private GunComponent m_gunComponent;
         [SerializeField] private ProjectileComponent m_projectilePrefab;
         [SerializeField] private int m_towerDamage = 25;
         [SerializeField] private float m_baseTowerHealth = 10;
-        [SerializeField] private SpriteRenderer m_towerRenderer;
         [SerializeField] private Sprite m_baseTowerSprite;
         [SerializeField] private List<Sprite> m_towerSprites;
-        [SerializeField] private GunComponent m_gunComponent;
         [SerializeField] private float m_attackRate = 1.5f;
+
+        [Header("Wave configuration")] 
+        [SerializeField] private int m_baseMonsterPerWave;
+        [SerializeField] private int m_monsterPerWaveGrow;
+        [SerializeField] private float m_waveIdle;
 
         private GameState m_gameState;
 
@@ -50,6 +63,16 @@ namespace Summoning
         private Dictionary<CombinationPart, int> m_partInventory;
         private List<CombinedMonster> m_summons;
         private float m_towerHealth;
+        
+        // Wave
+        private bool m_allSpawned;
+        private int m_currentWave;
+        private int m_currentMonsterAmount;
+        private List<CombinationPart> m_availableParts;
+        private float m_scheduleNextWaveTime;
+
+        public event Action<int> NewWaveStarted;
+        public event Action WaveCleared;
 
         private void Awake()
         {
@@ -109,6 +132,13 @@ namespace Summoning
             m_inventoryController.OnReset();
 
             m_towerRenderer.sprite = m_baseTowerSprite;
+            
+            m_currentWave = 1;
+            m_currentMonsterAmount = m_baseMonsterPerWave;
+            m_availableParts = new List<CombinationPart>() { CombinationPart.EARTH, CombinationPart.WATER };
+            m_scheduleNextWaveTime = 0.0f;
+            
+            this.SetupMobQueue();
         }
 
         public void DamageTower(int p_amount)
@@ -130,13 +160,28 @@ namespace Summoning
         {
             float l_deltaTime = Time.deltaTime;
             
-            ScaleDifficulty();
             ProcessPickup();
+
+            if (m_scheduleNextWaveTime > 0)
+            {
+                m_scheduleNextWaveTime -= Time.deltaTime;
+                if (m_scheduleNextWaveTime < 0)
+                {
+                    this.GoToNextWave();
+                }
+                else
+                {
+                    return;
+                }
+            }
 
             m_monsterMana += m_currentManaRegenRate * Time.deltaTime;
             if (m_monsterMana > m_manaCost)
             {
-                SpawnMonster();
+                if (SpawnMonster())
+                {
+                    m_allSpawned = true;
+                }
                 m_monsterMana -= m_manaCost;
             }
 
@@ -213,9 +258,52 @@ namespace Summoning
             }
         }
 
-        private void ScaleDifficulty()
+        private void GoToNextWave()
         {
-            m_currentManaRegenRate += Time.deltaTime * 0.05f;
+            this.NewWaveStarted?.Invoke(m_currentWave + 1);
+            
+            m_currentWave++;
+            m_currentMonsterAmount += m_monsterPerWaveGrow;
+
+            m_currentManaRegenRate = m_currentMonsterAmount / 5.0f;
+
+            if (m_currentWave == 2)
+            {
+                m_availableParts.Add(CombinationPart.FIRE);
+            } else if (m_currentWave == 3)
+            {
+                m_availableParts.Add(CombinationPart.PLANT);
+            } else if (m_currentWave == 4)
+            {
+                m_availableParts.Add(CombinationPart.ELECTRICITY);
+            } else if (m_currentWave == 5)
+            {
+                m_availableParts.Add(CombinationPart.DEMON);
+            }
+            
+            this.SetupMobQueue();
+        }
+
+        private void SetupMobQueue()
+        {
+            m_allSpawned = false;
+            m_monstersToSpawn.Clear();
+            for (int l_index = 0; l_index < m_currentMonsterAmount; l_index++)
+            {
+                m_monstersToSpawn.Enqueue(m_availableParts[Random.Range(0, m_availableParts.Count)]);
+            }
+        }
+
+        private void ClearSummons()
+        {
+            foreach (var l_combinedMonster in m_summons)
+            {
+                m_partInventory[l_combinedMonster.DamageType] += 1;
+                m_partInventory[l_combinedMonster.BodyType] += 1;
+                GameObject.Destroy(l_combinedMonster.gameObject);
+            }
+            
+            m_summons.Clear();
         }
 
         private void ProcessPickup()
@@ -240,9 +328,9 @@ namespace Summoning
             }
         }
 
-        private void SpawnMonster()
+        private bool SpawnMonster()
         {
-            if (m_monstersToSpawn.Count == 0) return;
+            if (m_monstersToSpawn.Count == 0) return false;
 
             var l_partToSpawn = m_monstersToSpawn.Dequeue();
             var l_monster = m_monsterController.SummonMonster(l_partToSpawn);
@@ -251,13 +339,13 @@ namespace Summoning
             {
                 m_monsters.Add(l_monster);
                 if (m_monsters.Count == 1) l_monster.Died += OnFirstMonsterDied;
-                m_monstersToSpawn.Enqueue(MonsterAsset.ExistingMonsters
-                                              [Random.Range(0, MonsterAsset.ExistingMonsters.Length)]);
             }
             else
             {
                 Debug.LogWarning("Could not spawn monster");
             }
+
+            return true;
         }
 
         private void OnFirstMonsterDied()
@@ -272,11 +360,25 @@ namespace Summoning
             {
                 m_monsters[0].Died += OnFirstMonsterDied;
             }
+            else
+            {
+                if (m_allSpawned)
+                {
+                    this.ScheduleNextWave();
+                }
+            }
 
             if (m_summons.Count > 0)
             {
                 m_summons[0].CurrentState = CombinedMonster.MonsterState.MOVE;
             }
+        }
+
+        private void ScheduleNextWave()
+        {
+            this.WaveCleared?.Invoke();
+            m_scheduleNextWaveTime = m_waveIdle;
+            this.ClearSummons();
         }
 
         private void SpawnDrop(CombinationPart p_part, Vector3 p_position)
@@ -307,6 +409,7 @@ namespace Summoning
 
         private void SpawnSummon(CombinationPart p_arm, CombinationPart p_body)
         {
+            m_summonSound.Play();
             m_partInventory[p_arm] -= 1;
             m_partInventory[p_body] -= 1;
             m_inventoryController.UpdateDisplay(m_partInventory);
@@ -321,6 +424,7 @@ namespace Summoning
 
         private void OnFirstSummonDied()
         {
+            m_summonDeathSound.Play();
             CombinedMonster l_first = m_summons[0];
             m_summons.RemoveAt(0);
 
@@ -331,6 +435,8 @@ namespace Summoning
                 {
                     l_combinedMonster.Heal(30);
                 }
+
+                m_summonHealSound.Play();
             }
 
             if (m_summons.Count > 0)

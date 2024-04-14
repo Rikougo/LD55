@@ -59,7 +59,6 @@ namespace Summoning.Combination
 
             if (m_isAttacking)
             {
-                Debug.Log($"Tick {p_deltaTime}");
                 m_animationProgress += p_deltaTime * (1.0f / m_attackRate);
                 Vector3 l_rotation = m_armJoint.eulerAngles;
                 l_rotation.z = m_attackAnimation.Evaluate(m_animationProgress);

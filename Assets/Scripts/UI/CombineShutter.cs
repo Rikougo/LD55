@@ -7,6 +7,7 @@ namespace Summoning.UI
     {
         [SerializeField] private AnimationCurve m_animationCurve;
         [SerializeField] private float m_animationTime;
+        [SerializeField] private AudioSource m_openSound;
 
         private float m_animationStart;
         private bool m_isOpen;
@@ -25,6 +26,11 @@ namespace Summoning.UI
             m_isOpen = !m_isOpen;
             m_isAnimating = true;
             m_animationStart = Time.time;
+
+            if (m_isOpen)
+            {
+                m_openSound.Play();
+            }
         }
 
         private void Update()
